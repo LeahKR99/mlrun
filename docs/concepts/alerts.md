@@ -1,7 +1,7 @@
 (alerts)=
 # Alerts 
 
-The alert mechanism provides a flexible way to detect and respond to important system events, such as job failures or model drift. You can define alerts using conditions like “event X happens N times in T minutes,” and attach notifications that are sent when the alert is activated. 
+The alert mechanism provides a flexible way to detect and respond to important system events, such as job failures or model drift. You can define alerts using conditions like “event *x* happens *n* times in *t* minutes” and attach notifications that are sent when the alert is activated. 
 
 **In this section**
 - [System configuration](#system-configuration)
