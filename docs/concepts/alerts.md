@@ -20,7 +20,7 @@ The alert mechanism provides a flexible way to detect and respond to important s
 ## System configuration 
 These variables control the basic alert behavior: 
 - `alerts.mode` &mdash; Enables/disables the feature. Enabled by default.
-- `alerts.max_allowed` &mdash; Maximum number of alerts allowed to be configured, by default 10000. Any new alerts above this limit return an error.
+- `alerts.max_allowed` &mdash; Maximum number of alerts allowed to be configured. By default, 10000. Any new alerts above this limit return an error.
 - `alerts.max_criteria_count` &mdash; Maximum number of events. By default, 100.
 
 These values can be modified by the [support team](mailto:support@iguazio.com).
