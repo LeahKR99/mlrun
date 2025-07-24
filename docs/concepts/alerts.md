@@ -20,7 +20,7 @@ The alert mechanism provides a flexible way to detect and respond to important s
 ## System configuration 
 These variables control the basic alert behavior: 
 - `alerts.mode` &mdash; Enables/disables the feature. Enabled by default.
-- `alerts.max_allowed` &mdash; Maximum number of alerts allowed to be configured. By default, 10000. Any new alerts above this limit return an error.
+- `alerts.max_allowed` &mdash; Maximum number of alerts allowed to be configured. Any new alerts above this limit return an error. By default, 10,000. 
 - `alerts.max_criteria_count` &mdash; Maximum number of events. By default, 100.
 
 These values can be modified by the [support team](mailto:support@iguazio.com).
@@ -55,12 +55,12 @@ See {ref}`model-monitoring-overview` for more details on drift and performance.
 
 ## Creating an alert
 When creating an alert you can select an event type for a specific model, for example `data_drift_suspected` or any of the predefined events above.
-You can optionally specify the frequency of the alert using the criteria field, which controls the threshold number of events in a given time window that triggers the alert.
-If criteria is not specified, the default is `count=1` and `period=None`, in which case the alert triggers immediately upon the first matching event.
+You can optionally specify the frequency of the alert using `criteria`, which controls the threshold number of events in a given time window that triggers the alert.
+If `criteria` is not specified, the default is `count=1` and `period=None`, in which case the alert triggers immediately upon the first matching event.
 You can configure Slack, Git, or webhook notifications for the alert.
 ``` {Admonition} Note on run identification
 Alerts track the job runs by name (`run.metadata.name`), not by the unique run UID. The run name can either be set explicitly or automatically generated when a job is executed. 
-You can access the run name from the result of the `run_function` call, for example:
+You can access the run name from the result of the `run_function` call. For example:
 ```python
 run = project.run_function("my-function", handler="handler", local=True)
 run_id = run.metadata.name
@@ -71,7 +71,7 @@ For alerts on model endpoints, see [Creating a model monitoring alert](#creating
 
 This example illustrates creating an alert with a Slack notification for a job failure with defined criteria. 
 This example uses `run_id`. You can set it to the run’s name (`run.metadata.name`), which is assigned when you run a job function.
-The same run-name could be reused for multiple executions, especially in cases where functions are retried or triggered with a fixed name. In this example, the alert is triggered if 3 separate job runs with the same name fail within 10 minutes (even though each job run has a different internal UID).
+The same run-name can be reused for multiple executions, especially in cases where functions are retried or triggered with a fixed name. In this example, the alert is triggered if 3 separate job runs with the same name fail within 10 minutes (even though each run has a different internal UID).
 
 ```python
 notification = mlrun.model.Notification(
@@ -109,7 +109,7 @@ project.store_alert_config(alert_data)
 ```
 ## Creating a model monitoring alert
 
-Model monitoring alerts notify you when measured input data and/or statistic/result produce unexpected results, the same as other alerts. The difference is that the configuration of a model monitoring alert is based on specific model endpoints and optionally result names, including wildcards. See the full parameter details in {py:func}`~mlrun.projects.MlrunProject.create_model_monitoring_alert_configs`. 
+Model monitoring alerts notify you when measured input data and/or statistics/results produce unexpected results, the same as other alerts. The difference is that the configuration of a model monitoring alert is based on specific model endpoints and optional result names, including wildcards. See the full parameter details in {py:func}`~mlrun.projects.MlrunProject.create_model_monitoring_alert_configs`. 
 (You could also use `mlrun.alerts.alert.AlertConfig` to configure ModelEndpoint alerts, but `create_model_monitoring_alert_configs` is much easier to configure).
 
 ```{admonition} Important
@@ -156,7 +156,7 @@ The {py:class}`mlrun.common.schemas.alert.ResetPolicy` specifies when to clear t
 becomes inactive, its notifications cease. When it is re-activated, notifications are renewed.
 The `ResetPolicy` options are:
 - manual &mdash; for manual reset of the alert
-- auto &mdash; if the criteria contains a time period such that the alert is reset once there are no more invocations in the relevant time window.
+- auto &mdash; the criteria includes a time period, so that the alert is reset when there are no more invocations within the specified time window.
 
 ``` {Admonition} Note
 If you change the `reset-policy` of an active alert from manual to auto, the alert is immediately reset. 
