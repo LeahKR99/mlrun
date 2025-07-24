@@ -55,8 +55,8 @@ See {ref}`model-monitoring-overview` for more details on drift and performance.
 
 ## Creating an alert
 When creating an alert you can select an event type for a specific model, for example `data_drift_suspected` or any of the predefined events above.
-You can optionally specify the frequency of the alert using `criteria`, which controls the threshold number of events in a given time window that triggers the alert.
-If `criteria` is not specified, the default is `count=1` and `period=None`, in which case the alert triggers immediately upon the first matching event.
+You can optionally specify the frequency of the alert using `AlertCriteria`, which controls the threshold number of events in a given time window that triggers the alert.
+If `AlertCriteria` is not specified, the default is `count=1` and `period=None`, in which case the alert triggers immediately upon the first matching event.
 You can configure Slack, Git, or webhook notifications for the alert.
 ``` {Admonition} Note on run identification
 Alerts track the job runs by name (`run.metadata.name`), not by the unique run UID. The run name can either be set explicitly or automatically generated when a job is executed. 
